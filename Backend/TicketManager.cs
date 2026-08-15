@@ -91,6 +91,8 @@ public class TicketManager
     // so GetAllTickets() returns a defensive copy instead.
     public List<Ticket> GetAllTickets()
     {
+        GetAllTickets<Ticket> getAllTickets = new GetAllTickets<Ticket>();
+        _tickets = getAllTickets;
         return _tickets;
     }
 
@@ -99,6 +101,13 @@ public class TicketManager
     {
         var result = new List<Ticket>();
         // TODO: Loop through _tickets and add any ticket with PriorityLevel
+        foreach ( var ticket in _tickets)
+        {
+         if (PriorityLevel == Critical || PriorityLevel == High)
+         {
+            result = ticket;
+         }
+        }
         // "Critical" or "High" to result.
         return result;
     }
@@ -117,6 +126,9 @@ public class TicketManager
     {
         var sorted = new List<Ticket>(_tickets);
         // TODO: Sort `sorted` by CreatedDate, newest first.
+         
+          Sort.sorted((b, a) >= b.CreatedDate.CompareTo(a.CreatedDate));  
+         
         return sorted;
     }
 
@@ -129,6 +141,10 @@ public class TicketManager
         var sorted = new List<Ticket>(_tickets);
         // TODO: Sort `sorted` by PriorityRank[t.PriorityLevel] ascending,
         // then by CreatedDate descending within the same priority.
+         foreach ( var ticket in _tickets)
+         {
+            Sort(PriorityRank[t.PriorityLevel])
+         }
         return sorted;
     }
 
@@ -139,6 +155,7 @@ public class TicketManager
     public double GetAverageResolutionDays()
     {
         // TODO: Implement using LINQ.
+        
         return 0;
     }
 
